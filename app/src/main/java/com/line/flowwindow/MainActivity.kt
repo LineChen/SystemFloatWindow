@@ -1,6 +1,7 @@
 package com.line.flowwindow
 
 import android.graphics.PixelFormat
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -27,21 +28,19 @@ class MainActivity : AppCompatActivity() {
                     or WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
                     or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
 
-//            if (float_window_type === FLOAT_WINDOW_TYPE_DIALOG) {
-            //wmParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
-            wmParams.type = WindowManager.LayoutParams.TYPE_TOAST
-//            } else if (float_window_type === FLOAT_WINDOW_TYPE_ALERT_WINDOW) {
-//                //需要权限
-//                wmParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
-//            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                wmParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            } else {
+                wmParams.type = WindowManager.LayoutParams.TYPE_PHONE
+            }
 
             wmParams.format = PixelFormat.RGBA_8888
             wmParams.gravity = Gravity.START or Gravity.TOP
             val flowWindowView = getFlowWindowView()
             wmParams.width = 100
             wmParams.height = 100
-            wmParams.x = 100
-            wmParams.y = 100
+            wmParams.x = 400
+            wmParams.y = 800
             windowManager.addView(flowWindowView, wmParams)
         }
     }
