@@ -3,12 +3,14 @@ package com.line.flowwindow
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,15 +39,19 @@ class MainActivity : AppCompatActivity() {
             wmParams.format = PixelFormat.RGBA_8888
             wmParams.gravity = Gravity.START or Gravity.TOP
             val flowWindowView = getFlowWindowView()
-            wmParams.width = 100
-            wmParams.height = 100
-            wmParams.x = 400
-            wmParams.y = 800
+            wmParams.width = (200 * resources.displayMetrics.density).toInt()
+            wmParams.height = (300 * resources.displayMetrics.density).toInt()
+            wmParams.x = 300
+            wmParams.y = 300
+            flowWindowView.setParams(wmParams)
             windowManager.addView(flowWindowView, wmParams)
         }
     }
 
-    private fun getFlowWindowView(): View {
-        return LayoutInflater.from(this).inflate(R.layout.layout_flow_window_view, null, false)
+    private fun getFlowWindowView(): LiveFloatView {
+        val view = LiveFloatView(this)
+//            LayoutInflater.from(this).inflate(R.layout.layout_flow_window_view, null, false)
+        Log.d("FlowWindowSmallView", "getFlowWindowView ")
+        return view
     }
 }
