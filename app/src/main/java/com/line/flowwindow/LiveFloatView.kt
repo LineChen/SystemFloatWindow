@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 
 /**
  * Created by chenliu on 2020/10/22.
@@ -12,6 +13,11 @@ import android.view.View
 class LiveFloatView : BaseFloatDragView {
 
     private val TAG = "LiveFloatView"
+
+    private var viewWidth = 0
+
+    private var viewHeight = 0
+
 
     constructor (context: Context) : super(context)
 
@@ -26,18 +32,29 @@ class LiveFloatView : BaseFloatDragView {
     init {
         LayoutInflater.from(context).inflate(R.layout.lauout_float_window_small, this)
         val view = findViewById<View>(R.id.small_window_layout)
-        FlowWindowSmallView.viewWidth = view.layoutParams.width
-        FlowWindowSmallView.viewHeight = view.layoutParams.height
+        viewWidth = view.layoutParams.width
+        viewHeight = view.layoutParams.height
         Log.d(
             TAG,
-            "FlowWindowSmallView: width:" + FlowWindowSmallView.viewWidth + "," + FlowWindowSmallView.viewHeight
+            "LiveFloatView size:$viewWidth,$viewHeight"
         )
 
         view.findViewById<View>(R.id.iv_close)
             .setOnClickListener {
                 removeFloatView(this)
             }
+    }
 
+    override fun getViewWidth(): Int {
+        return viewWidth
+    }
+
+    override fun getViewHeight(): Int {
+        return viewHeight
+    }
+
+    override fun onSingleTap() {
+        Log.d(TAG, "onSingleTap")
     }
 
 }

@@ -2,21 +2,17 @@ package com.line.flowwindow
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 
 /**
  * Created by chenliu on 2020/10/22.
  */
-open class BaseFloatDragView : BaseDragView {
-    /**
-     * 用于更新小悬浮窗的位置
-     */
+abstract class BaseFloatDragView : BaseDragView {
+
     private var windowManager: WindowManager? = null
 
-    /**
-     * 小悬浮窗的参数
-     */
     private var mParams: WindowManager.LayoutParams? = null
 
     constructor (context: Context) : super(context)
@@ -42,10 +38,10 @@ open class BaseFloatDragView : BaseDragView {
         windowManager?.removeViewImmediate(view)
     }
 
-    override fun onMove(distanceX: Float, distanceY: Float) {
+    override fun onMove(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float) {
         if (mParams != null) {
-            mParams!!.x = distanceX.toInt()
-            mParams!!.y = distanceY.toInt()
+            mParams!!.x = (e2.rawX - e1.x).toInt()
+            mParams!!.y = (e2.rawY - e1.y).toInt()
         }
         windowManager?.updateViewLayout(this, mParams)
     }
@@ -53,5 +49,9 @@ open class BaseFloatDragView : BaseDragView {
     override fun onSingleTap() {
 
     }
+
+    abstract fun getViewWidth(): Int
+
+    abstract fun getViewHeight(): Int
 
 }

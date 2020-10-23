@@ -39,8 +39,10 @@ class MainActivity : AppCompatActivity() {
             wmParams.format = PixelFormat.RGBA_8888
             wmParams.gravity = Gravity.START or Gravity.TOP
             val flowWindowView = getFlowWindowView()
-            wmParams.width = (200 * resources.displayMetrics.density).toInt()
-            wmParams.height = (300 * resources.displayMetrics.density).toInt()
+            val viewWidth = flowWindowView.getViewWidth()
+            val viewHeight = flowWindowView.getViewHeight()
+            wmParams.width = viewWidth
+            wmParams.height = viewHeight
             wmParams.x = 300
             wmParams.y = 300
             flowWindowView.setParams(wmParams)

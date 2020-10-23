@@ -2,7 +2,6 @@ package com.line.flowwindow;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
@@ -33,28 +32,18 @@ public abstract class BaseDragView extends FrameLayout {
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                Log.d(TAG, "onSingleTapConfirmed: ");
                 onSingleTap();
                 return true;
             }
 
-            /**
-             *
-             * @param e1
-             * @param e2
-             * @param distanceX
-             * @param distanceY
-             * @return
-             */
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                onMove(e2.getRawX() - e1.getX(), e2.getRawY() - e1.getY());
+                onMove(e1, e2, distanceX, distanceY);
                 return true;
             }
 
             @Override
             public boolean onDown(MotionEvent e) {
-                Log.d(TAG, "onDown: (" + e.getX() + "," + e.getY() + ")");
                 return true;
             }
         };
@@ -69,5 +58,5 @@ public abstract class BaseDragView extends FrameLayout {
 
     protected abstract void onSingleTap();
 
-    protected abstract void onMove(float distanceX, float distanceY);
+    protected abstract void onMove(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY);
 }
