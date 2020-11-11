@@ -1,10 +1,11 @@
-package com.line.flowwindow
+package com.line.systemfloat
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import com.line.dragview.BaseDragView
 
 /**
  * Created by chenliu on 2020/10/22.
@@ -38,7 +39,7 @@ abstract class BaseFloatDragView : BaseDragView {
         windowManager?.removeViewImmediate(view)
     }
 
-    override fun onMove(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float) {
+    override fun onMove(e1: MotionEvent, e2: MotionEvent, distanceX: Int, distanceY: Int) {
         if (mParams != null) {
             mParams!!.x = (e2.rawX - e1.x).toInt()
             mParams!!.y = (e2.rawY - e1.y).toInt()
@@ -49,9 +50,4 @@ abstract class BaseFloatDragView : BaseDragView {
     override fun onSingleTap() {
 
     }
-
-    abstract fun getViewWidth(): Int
-
-    abstract fun getViewHeight(): Int
-
 }

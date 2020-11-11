@@ -4,16 +4,17 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import com.line.systemfloat.BaseFloatDragView
+import com.line.systemfloat.BaseFloatDragView2
+import com.line.systemfloat.BaseFloatDragView3
 
 /**
  * Created by chenliu on 2020/10/22.
  */
-class LiveFloatView : BaseFloatDragView {
-
-    private val TAG = "LiveFloatView"
+class LiveFloatView2 : BaseFloatDragView3 {
 
     constructor (context: Context) : super(context)
 
@@ -37,8 +38,8 @@ class LiveFloatView : BaseFloatDragView {
             }
     }
 
-    override fun onSingleTap() {
-        Log.d(TAG, "onSingleTap")
+    override fun onInterceptHoverEvent(event: MotionEvent?): Boolean {
+        return true
     }
 
 }

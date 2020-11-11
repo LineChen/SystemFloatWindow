@@ -1,2 +1,4 @@
+include ':systemfloat'
+include ':dragview'
 include ':app'
 rootProject.name = "SystemFlowWindow"

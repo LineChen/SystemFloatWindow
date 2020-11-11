@@ -1,16 +1,16 @@
 package com.line.flowwindow
 
+import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.line.flowwindow.netro.NextLiveWindowView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.log
 
@@ -21,53 +21,51 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+        /* btnStartFlowWindow.setOnClickListener {
+             val checkPermission = checkPermission()
+             Toast.makeText(this, "是否开启权限$checkPermission", Toast.LENGTH_SHORT).show()
+
+             val flowWindowView = getFlowWindowView()
+
+             val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+             val windowLayoutParams = WindowManager.LayoutParams()
+             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                 windowLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+             } else {
+                 windowLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE
+             }
+             windowLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+             windowLayoutParams.format = PixelFormat.TRANSPARENT
+             windowLayoutParams.gravity = Gravity.START or Gravity.TOP
+             windowLayoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT
+             windowLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+             windowLayoutParams.x = 100//point.x
+             windowLayoutParams.y = 100//point.y
+             flowWindowView.setParams(windowLayoutParams)
+             windowManager.addView(flowWindowView, windowLayoutParams)
+         }*/
+
+//        btnStartFlowWindow.setOnClickListener {
+//            NextLiveWindowView().show(this)
+//        }
+
         btnStartFlowWindow.setOnClickListener {
-            val checkPermission = checkPermission()
-            Toast.makeText(this, "是否开启权限$checkPermission", Toast.LENGTH_SHORT).show()
+            LiveFloatView2(this).show(300, 300)
 
-            val windowManager = windowManager
-
-            val wmParams = WindowManager.LayoutParams()
-            wmParams.packageName = packageName
-            wmParams.flags = (WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                    or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                    or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                    or WindowManager.LayoutParams.FLAG_SCALED
-                    or WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
-                    or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                wmParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-            } else {
-                wmParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
-            }
-
-            wmParams.format = PixelFormat.RGBA_8888
-            wmParams.gravity = Gravity.START or Gravity.TOP
-            val flowWindowView = getFlowWindowView()
-            val viewWidth = flowWindowView.getViewWidth()
-            val viewHeight = flowWindowView.getViewHeight()
-            wmParams.width = 0
-            wmParams.height = 0
-            wmParams.x = 300
-            wmParams.y = 300
-            flowWindowView.setParams(wmParams)
-            windowManager.addView(flowWindowView, wmParams)
-
-//            如果不先设置 wmParams.width和 wmParams.height属性，滑动效果就没有了
-            flowWindowView.post {
-                wmParams.width = flowWindowView.width
-                wmParams.height = flowWindowView.height
-                windowManager?.updateViewLayout(flowWindowView, wmParams)
-            }
+            NextLiveWindowView().show(this)
         }
+
     }
 
     private fun getFlowWindowView(): LiveFloatView {
-        val view = LiveFloatView(this)
-//            LayoutInflater.from(this).inflate(R.layout.layout_flow_window_view, null, false)
-        Log.d("FlowWindowSmallView", "getFlowWindowView ")
-        return view
+//        val view = LiveFloatView(this)
+//        val container = FrameLayout(this)
+//        val childView =
+//            LayoutInflater.from(this).inflate(R.layout.lauout_float_window_small, container, false)
+//        container.addView(childView)
+//        Log.d("FlowWindowSmallView", "getFlowWindowView ")
+        return LiveFloatView(this)
     }
 
     private fun checkPermission(): Boolean {
